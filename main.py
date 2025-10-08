@@ -79,8 +79,10 @@ async def on_button(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 # ---------- Запуск ----------
 def main():
-    keep_alive()  # для Replit
-    TOKEN = "8314917201:AAGm_Ax9pKl8NOX5_XQncUKcHKogpdAf6JY"
+    # keep_alive()  # Отключаем, Render сам держит сервер активным
+    TOKEN = os.getenv("BOT_TOKEN")  # Берём токен из переменной окружения Render
+    if not TOKEN:
+        raise ValueError("❌ BOT_TOKEN не найден. Проверь настройки Environment в Render.")
     app = ApplicationBuilder().token(TOKEN).build()
 
     app.add_handler(CommandHandler("start", start))
